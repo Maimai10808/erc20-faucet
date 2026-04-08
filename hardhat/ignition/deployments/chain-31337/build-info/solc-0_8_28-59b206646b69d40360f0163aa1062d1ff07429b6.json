@@ -1,0 +1,40 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_28-59b206646b69d40360f0163aa1062d1ff07429b6",
+  "solcVersion": "0.8.28",
+  "solcLongVersion": "0.8.28+commit.7893614a",
+  "compilerType": "solc",
+  "userSourceNameMap": {
+    "contracts/TokenFaucet.sol": "project/contracts/TokenFaucet.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "cancun",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/TokenFaucet.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.24;\n\ninterface IERC20 {\n    function balanceOf(address account) external view returns (uint256);\n\n    function transfer(address to, uint256 amount) external returns (bool);\n}\n\ncontract Faucet {\n    uint256 public amountAllowed;\n    address public tokenContract;\n    mapping(address => bool) public requestedAddress;\n\n    event SendToken(address indexed receiver, uint256 indexed amount);\n\n    constructor(address _tokenContract, uint256 _amountAllowed) {\n        tokenContract = _tokenContract;\n        amountAllowed = _amountAllowed;\n    }\n\n    function requestTokens() external {\n        require(!requestedAddress[msg.sender], \"Can't request multiple times!\");\n\n        IERC20 token = IERC20(tokenContract);\n\n        require(\n            token.balanceOf(address(this)) >= amountAllowed,\n            \"Faucet empty!\"\n        );\n\n        bool success = token.transfer(msg.sender, amountAllowed);\n        require(success, \"Token transfer failed\");\n\n        requestedAddress[msg.sender] = true;\n\n        emit SendToken(msg.sender, amountAllowed);\n    }\n}\n"
+      }
+    }
+  }
+}

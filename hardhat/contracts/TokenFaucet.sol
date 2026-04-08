@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.24;
 
 interface IERC20 {
     function balanceOf(address account) external view returns (uint256);
@@ -8,14 +8,15 @@ interface IERC20 {
 }
 
 contract Faucet {
-    uint256 public amountAllowed = 100;
+    uint256 public amountAllowed;
     address public tokenContract;
     mapping(address => bool) public requestedAddress;
 
     event SendToken(address indexed receiver, uint256 indexed amount);
 
-    constructor(address _tokenContract) {
+    constructor(address _tokenContract, uint256 _amountAllowed) {
         tokenContract = _tokenContract;
+        amountAllowed = _amountAllowed;
     }
 
     function requestTokens() external {

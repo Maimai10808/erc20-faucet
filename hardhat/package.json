@@ -2,9 +2,14 @@
   "name": "hardhat",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "compile": "hardhat compile",
+    "export:generated": "node --experimental-strip-types scripts/export-frontend-two-tokens.ts"
+  },
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^3.1.1",
     "@nomicfoundation/hardhat-toolbox-viem": "^5.0.3",
+    "@openzeppelin/contracts": "^5.4.0",
     "@types/node": "^22.19.17",
     "forge-std": "github:foundry-rs/forge-std#v1.9.4",
     "hardhat": "^3.3.0",
