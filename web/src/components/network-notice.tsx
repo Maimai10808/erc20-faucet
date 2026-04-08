@@ -19,7 +19,7 @@ export function NetworkNotice() {
               Wallet connection is optional until you claim.
             </p>
             <p className="mt-1 text-sm text-[color:var(--muted)]">
-              Clicking a claim button will prompt a wallet connection automatically.
+              Clicking a ballot button will prompt a wallet connection automatically.
             </p>
           </div>
         </div>
@@ -39,8 +39,8 @@ export function NetworkNotice() {
               Wrong network detected.
             </p>
             <p className="mt-1 text-sm text-[color:var(--muted)]">
-              Switch to Hardhat Localhost ({appChain.id}) before claiming from either
-              faucet.
+              Switch to Hardhat Localhost ({appChain.id}) before casting a ballot or
+              funding campaign reserves.
             </p>
           </div>
         </div>

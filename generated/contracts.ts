@@ -1,9 +1,8 @@
-/* Auto-generated file. Do not edit manually. */
+/* eslint-disable */
 
-export const trumpTokenAddress = "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853" as const;
-export const bidenTokenAddress = "0x0165878A594ca255338adfa4d48449f69242Eb8F" as const;
-export const trumpFaucetAddress = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318" as const;
-export const bidenFaucetAddress = "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6" as const;
+export const trumpTokenAddress = "0x0B306BF915C4d645ff596e518fAf3F9669b97016" as const;
+export const bidenTokenAddress = "0x9A676e781A523b5d0C0e43731313A708CB607508" as const;
+export const electionFaucetAddress = "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1" as const;
 
 export const myTokenAbi = [
   {
@@ -439,22 +438,118 @@ export const myTokenAbi = [
   }
 ] as const;
 
-export const faucetAbi = [
+export const electionFaucetAbi = [
   {
     "inputs": [
       {
         "internalType": "address",
-        "name": "_tokenContract",
+        "name": "_trumpToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_bidenToken",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "_amountAllowed",
+        "name": "_rewardAmount",
         "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "initialOwner",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "AlreadyVoted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FaucetEmpty",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidCandidate",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TransferFailed",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "enum ElectionFaucet.Candidate",
+        "name": "candidate",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "CandidateFunded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "enum ElectionFaucet.Candidate",
+        "name": "candidate",
+        "type": "uint8"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EmergencyWithdraw",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -462,22 +557,79 @@ export const faucetAbi = [
       {
         "indexed": true,
         "internalType": "address",
-        "name": "receiver",
+        "name": "previousOwner",
         "type": "address"
       },
       {
         "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "oldAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newAmount",
         "type": "uint256"
       }
     ],
-    "name": "SendToken",
+    "name": "RewardAmountUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "voter",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "enum ElectionFaucet.Candidate",
+        "name": "candidate",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewardAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "VotedAndClaimed",
     "type": "event"
   },
   {
     "inputs": [],
-    "name": "amountAllowed",
+    "name": "bidenToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bidenVotes",
     "outputs": [
       {
         "internalType": "uint256",
@@ -489,10 +641,102 @@ export const faucetAbi = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "requestTokens",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdrawBiden",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "emergencyWithdrawTrump",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "fundBiden",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "fundTrump",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getBalances",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "trumpBalance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "bidenBalance",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getVoteResult",
+    "outputs": [
+      {
+        "internalType": "enum ElectionFaucet.Candidate",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -503,7 +747,7 @@ export const faucetAbi = [
         "type": "address"
       }
     ],
-    "name": "requestedAddress",
+    "name": "hasVoted",
     "outputs": [
       {
         "internalType": "bool",
@@ -516,12 +760,143 @@ export const faucetAbi = [
   },
   {
     "inputs": [],
-    "name": "tokenContract",
+    "name": "owner",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rewardAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "newRewardAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRewardAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalVotes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trumpToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trumpVotes",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum ElectionFaucet.Candidate",
+        "name": "candidate",
+        "type": "uint8"
+      }
+    ],
+    "name": "voteAndClaim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "voteBiden",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "voteTrump",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "votedFor",
+    "outputs": [
+      {
+        "internalType": "enum ElectionFaucet.Candidate",
+        "name": "",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
@@ -532,5 +907,5 @@ export const faucetAbi = [
 export const deploymentMeta = {
   "deploymentId": "chain-31337",
   "deploymentDir": "/Users/mac/Desktop/Web/BlockchainDemoProjects/erc20-faucet/hardhat/ignition/deployments/chain-31337",
-  "exportedAt": "2026-04-08T09:15:09.677Z"
+  "exportedAt": "2026-04-08T14:35:02.327Z"
 } as const;

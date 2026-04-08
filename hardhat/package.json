@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "compile": "hardhat compile",
-    "export:generated": "node --experimental-strip-types scripts/export-frontend-two-tokens.ts"
+    "export:generated": "node --experimental-strip-types scripts/export-generated.ts"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^3.1.1",

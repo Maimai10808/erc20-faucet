@@ -109,6 +109,12 @@ button {
     inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
+.portrait-frame {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.38), transparent 45%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+}
+
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -182,4 +188,25 @@ button {
 
 .balance-highlight {
   animation: balance-flash 1.6s ease;
+}
+
+@keyframes candidate-pulse {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(217, 164, 65, 0);
+  }
+
+  30% {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px rgba(217, 164, 65, 0.35), 0 24px 60px rgba(217, 164, 65, 0.18);
+  }
+
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgba(217, 164, 65, 0);
+  }
+}
+
+.candidate-highlight {
+  animation: candidate-pulse 1.8s ease;
 }
